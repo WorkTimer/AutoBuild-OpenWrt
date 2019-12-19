@@ -23,7 +23,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu:trusty
+    runs-on: ubuntu:lastest
 
     steps:
     - name: Checkout
