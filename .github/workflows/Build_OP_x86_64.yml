@@ -97,9 +97,9 @@ jobs:
         name: OpenWrt
         path: openwrt/bin
 
-    #- name: Upload to release
-    #  uses: JasonEtco/upload-to-release@master
-    #  with:
-    #    args: openwrt/bin/*
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.actions }}
+    - name: Upload to release
+      uses: JasonEtco/upload-to-release@master
+      with:
+        args: openwrt/bin/
+      env:
+        GITHUB_TOKEN: ${{ secrets.actions }}
