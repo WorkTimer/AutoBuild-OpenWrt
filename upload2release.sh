@@ -15,6 +15,7 @@ if [ "$IS_DRAFT" = true ]; then
   echo "This is a draft, so nothing to do!"
   exit 0
 fi
+echo IS_DRAFT = $IS_DRAFT
 
 # Build the Upload URL from the various pieces
 echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
