@@ -18,7 +18,7 @@ fi
 
 # Build the Upload URL from the various pieces
 echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
-cat $GITHUB_EVENT_PATH/.release.id
+cat $GITHUB_EVENT_PATH
 RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
 echo RELEASE_ID = $RELEASE_ID
 if [[ -z "${RELEASE_ID}" ]]; then
