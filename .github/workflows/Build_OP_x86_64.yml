@@ -34,8 +34,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.actions }}
       #working-directory: ./openwrt
       run: |
-        echo $GITHUB_TOKEN
-        echo ${{ secrets.actions }}
         chmod +x ./upload2release.sh && ./upload2release.sh
         
     - name: Initialization environment
