@@ -91,7 +91,13 @@ jobs:
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
-    #- name: Upload to release
+    - name: Upload to release
+      env:
+        GITHUB_TOKEN: ${{ secrets.actions }}
+      working-directory: ./openwrt
+      run: |
+        chmod +x ./upload-to-release.sh && ./upload-to-release.sh
+
     #  uses: JasonEtco/upload-to-release@master
     #  with:
     #    args: openwrt/bin/
