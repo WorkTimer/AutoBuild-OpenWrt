@@ -8,7 +8,6 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
   echo "Set the GITHUB_TOKEN env variable."
   exit 1
 fi
-echo $GITHUB_TOKEN
 
 # Only upload to non-draft releases
 IS_DRAFT=$(jq --raw-output '.release.draft' $GITHUB_EVENT_PATH)
@@ -16,11 +15,23 @@ if [ "$IS_DRAFT" = true ]; then
   echo "This is a draft, so nothing to do!"
   exit 0
 fi
-echo $GITHUB_EVENT_PATH
-echo $IS_DRAFT
+
+# Build the Upload URL from the various pieces
+echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
+RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
+echo RELEASE_ID = $RELEASE_ID
+if [[ -z "${RELEASE_ID}" ]]; then
+  echo "There was no release ID in the GitHub event. Are you using the release event type?"
+  exit 1
+fi
 
 # Prepare the headers
-#AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
+AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
+echo AUTH_HEADER = $AUTH_HEADER
+
+CONTENT_TYPE_HEADER="Content-Type: application/zip"
+echo CONTENT_TYPE_HEADER = CONTENT_TYPE_HEADER
+
 #CONTENT_LENGTH_HEADER="Content-Length: $(stat -c%s "${1}")"
 
 #if [[ -z "$2" ]]; then
@@ -29,12 +40,7 @@ echo $IS_DRAFT
 #  CONTENT_TYPE_HEADER="Content-Type: application/zip"
 #fi
 
-# Build the Upload URL from the various pieces
-#RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
-#if [[ -z "${RELEASE_ID}" ]]; then
-#  echo "There was no release ID in the GitHub event. Are you using the release event type?"
-#  exit 1
-#fi
+
 
 #FILENAME=$(basename $1)
 #UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
