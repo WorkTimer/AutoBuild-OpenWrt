@@ -8,19 +8,23 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
   echo "Set the GITHUB_TOKEN env variable."
   exit 1
 fi
+echo $GITHUB_TOKEN
 
 # Ensure that the file path is present
-#if [[ -z "$1" ]]; then
-#  echo "You must pass at least one argument to this action, the path to the file to upload."
-#  exit 1
-#fi
+if [[ -z "$1" ]]; then
+  echo "You must pass at least one argument to this action, the path to the file to upload."
+  exit 1
+fi
+echo $1
 
 # Only upload to non-draft releases
-#IS_DRAFT=$(jq --raw-output '.release.draft' $GITHUB_EVENT_PATH)
-#if [ "$IS_DRAFT" = true ]; then
-#  echo "This is a draft, so nothing to do!"
-#  exit 0
-#fi
+IS_DRAFT=$(jq --raw-output '.release.draft' $GITHUB_EVENT_PATH)
+if [ "$IS_DRAFT" = true ]; then
+  echo "This is a draft, so nothing to do!"
+  exit 0
+fi
+echo $GITHUB_EVENT_PATH
+echo $IS_DRAFT
 
 # Prepare the headers
 #AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
@@ -52,4 +56,4 @@ fi
 #  -H "${CONTENT_TYPE_HEADER}" \
 #  --upload-file "${1}" \
 #  "${UPLOAD_URL}"
-© 2019 GitHub, Inc.
+
