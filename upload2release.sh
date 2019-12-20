@@ -18,6 +18,7 @@ fi
 
 # Build the Upload URL from the various pieces
 echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
+ls $GITHUB_EVENT_PATH
 RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
 echo RELEASE_ID = $RELEASE_ID
 if [[ -z "${RELEASE_ID}" ]]; then
@@ -30,7 +31,7 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 echo AUTH_HEADER = $AUTH_HEADER
 
 CONTENT_TYPE_HEADER="Content-Type: application/zip"
-echo CONTENT_TYPE_HEADER = CONTENT_TYPE_HEADER
+echo CONTENT_TYPE_HEADER = $CONTENT_TYPE_HEADER
 
 #CONTENT_LENGTH_HEADER="Content-Length: $(stat -c%s "${1}")"
 
