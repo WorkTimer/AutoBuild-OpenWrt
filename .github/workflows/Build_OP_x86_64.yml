@@ -29,6 +29,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
+    - name: Upload to release
+      env:
+        GITHUB_TOKEN: ${{ secrets.actions }}
+      #working-directory: ./openwrt
+      run: |
+        echo $GITHUB_TOKEN
+        echo ${{ secrets.actions }}
+        chmod +x ./upload2release.sh && ./upload2release.sh
+        
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -62,13 +71,6 @@ jobs:
         REPO_URL: https://github.com/coolsnowwolf/lede
         REPO_BRANCH: master
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-
-    - name: Upload to release
-      env:
-        GITHUB_TOKEN: ${{ secrets.actions }}
-      #working-directory: ./openwrt
-      run: |
-        chmod +x ./upload2release.sh && ./upload2release.sh
     
     - name: Update & Install feeds
       working-directory: ./openwrt
