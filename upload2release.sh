@@ -15,7 +15,6 @@ if [ "$IS_DRAFT" = true ]; then
   echo "This is a draft, so nothing to do!"
   exit 0
 fi
-echo IS_DRAFT = $IS_DRAFT
 
 # Build the Upload URL from the various pieces
 echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
@@ -38,10 +37,8 @@ fi
 
 # Prepare the headers
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
-echo AUTH_HEADER = $AUTH_HEADER
 
 CONTENT_TYPE_HEADER="Content-Type: application/zip"
-echo CONTENT_TYPE_HEADER = $CONTENT_TYPE_HEADER
 
 #CONTENT_LENGTH_HEADER="Content-Length: $(stat -c%s "${1}")"
 
