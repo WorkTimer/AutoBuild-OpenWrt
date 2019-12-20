@@ -28,7 +28,7 @@ cat $GITHUB_EVENT_PATH
 RELEASE_ID=$(curl -s --fail \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" |
-    jq --raw-output ".[] |.tag_name ")
+    jq --raw-output ".[0] |.tag_name ")
 echo RELEASE_ID = $RELEASE_ID
 
 if [[ -z "${RELEASE_ID}" ]]; then
@@ -45,11 +45,6 @@ echo CONTENT_TYPE_HEADER = $CONTENT_TYPE_HEADER
 
 #CONTENT_LENGTH_HEADER="Content-Length: $(stat -c%s "${1}")"
 
-#if [[ -z "$2" ]]; then
-#  CONTENT_TYPE_HEADER="Content-Type: ${2}"
-#else
-#  CONTENT_TYPE_HEADER="Content-Type: application/zip"
-#fi
 
 
 
