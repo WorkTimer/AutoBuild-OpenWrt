@@ -20,8 +20,15 @@ echo IS_DRAFT = $IS_DRAFT
 # Build the Upload URL from the various pieces
 echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
 cat $GITHUB_EVENT_PATH
-RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
+#RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
+#echo RELEASE_ID = $RELEASE_ID
+
+RELEASE_ID=$(curl --fail \
+    -H "Authorization: token ${GITHUB_TOKEN}" \
+    "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" |
+			jq --raw-output ".[] | select(.tag_name == \"$TAG\") | .id")
 echo RELEASE_ID = $RELEASE_ID
+
 if [[ -z "${RELEASE_ID}" ]]; then
   echo "There was no release ID in the GitHub event. Are you using the release event type?"
   exit 1
