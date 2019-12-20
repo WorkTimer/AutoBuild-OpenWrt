@@ -23,9 +23,9 @@ cat $GITHUB_EVENT_PATH
 #RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
 #echo RELEASE_ID = $RELEASE_ID
 
-curl --fail -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
+curl -s --fail -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 
-RELEASE_ID=$(curl --fail \
+RELEASE_ID=$(curl -s --fail \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" |
     jq --raw-output ".[] | select(.tag_name == \"$TAG\") | .id")
