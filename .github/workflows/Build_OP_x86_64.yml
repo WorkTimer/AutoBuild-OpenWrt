@@ -33,7 +33,6 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        docker rmi `docker images -q` -f
         echo "Deleting files, please wait ..."
         sudo rm -rf \
           /usr/share/dotnet \
