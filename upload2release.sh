@@ -10,13 +10,6 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
 fi
 echo $GITHUB_TOKEN
 
-# Ensure that the file path is present
-if [[ -z "$1" ]]; then
-  echo "You must pass at least one argument to this action, the path to the file to upload."
-  exit 1
-fi
-echo $1
-
 # Only upload to non-draft releases
 IS_DRAFT=$(jq --raw-output '.release.draft' $GITHUB_EVENT_PATH)
 if [ "$IS_DRAFT" = true ]; then
