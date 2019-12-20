@@ -45,7 +45,13 @@ echo CONTENT_TYPE_HEADER = $CONTENT_TYPE_HEADER
 
 #CONTENT_LENGTH_HEADER="Content-Length: $(stat -c%s "${1}")"
 
-
+find /lede/bin/ -name '*' -type f -exec bash -c 'echo "$1" |  tr / _ ' - {} \; | xargs -I %  \
+curl  --connect-timeout 20 --retry 5 \
+  -sSL \
+  -XPOST \
+  -H "${AUTH_HEADER}" \
+  -H "${CONTENT_TYPE_HEADER}" \
+  https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=%
 
 
 #FILENAME=$(basename $1)
