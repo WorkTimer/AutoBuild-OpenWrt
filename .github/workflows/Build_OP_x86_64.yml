@@ -63,6 +63,13 @@ jobs:
         REPO_BRANCH: master
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
+    - name: Upload to release
+      env:
+        GITHUB_TOKEN: ${{ secrets.actions }}
+      working-directory: ./openwrt
+      run: |
+        chmod +x ./upload-to-release.sh && ./upload-to-release.sh
+    
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
@@ -91,12 +98,7 @@ jobs:
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
-    - name: Upload to release
-      env:
-        GITHUB_TOKEN: ${{ secrets.actions }}
-      working-directory: ./openwrt
-      run: |
-        chmod +x ./upload-to-release.sh && ./upload-to-release.sh
+
 
     #  uses: JasonEtco/upload-to-release@master
     #  with:
