@@ -66,9 +66,9 @@ jobs:
     - name: Upload to release
       env:
         GITHUB_TOKEN: ${{ secrets.actions }}
-      working-directory: ./openwrt
+      #working-directory: ./openwrt
       run: |
-        chmod +x ./upload-to-release.sh && ./upload-to-release.sh
+        chmod +x ./upload2release.sh && ./upload2release.sh
     
     - name: Update & Install feeds
       working-directory: ./openwrt
